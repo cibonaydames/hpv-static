@@ -54,7 +54,6 @@
                                     <b>How can I prevent HPV inflections?</b><br>
                                     HPV vaccines are highly effective in preventing the targeted HPV types. Three vaccines (Cervarix, Gardasil, and Gardasil 9) have been approved by the Food and Drug Administration (FDA) to prevent HPV infection, and results of clinical trials have demonstrated high efficacy (about 95%) of these vaccines. All three HPV vaccines are licensed for females and males through age 26.
                                     </p>    
-                                
                               </div>  
 						</div>
 						
@@ -62,23 +61,17 @@
                            <center>
                             <h2 class="mb-10 heading">What is Your Estimated Risk of Having HPV?</h2>
                             <br>
-                               <h3 class="mb-10 heading"><b>Click</b> the following buttons to explore how your risk of getting infected with HPV <br> is influenced by the <b>number of your sexual partners in lifetime.</b></h3>
-                                <br>
-                               <center>
-<!--						        <div class="btn-group" data-toggle="buttons-radio">-->
-                                    <button type="button" id="zero" class="btn switch" >0</button>
-                                    <button type="button" id="one" class="btn switch">1</button>
-                                    <button type="button" id="two" class="btn switch">2</button>
-                                    <button type="button" id="three_five" class="btn switch">3-5</button>
-                                    <button type="button" id="six_plus" class="btn switch">6+</button>
-<!--                                </div>-->
-                               </center>
-    <br><br>
-							<div id="hpvchart"></div>
-                              <h5 class="mb-10 heading">
-                              <span style="color:#8cb8ba">Vaccinated</span>
-                              <span style="color:white">. . . . . . . . . .</span>   
-                               <span style="color:#aa5135">Not Vaccinated</span></h5> 
+                               <h3 class="mb-10 heading">See how your risk of getting infected with HPV <br> is influenced by the <b>number of your sexual partners in lifetime.</b></h3>
+                                
+                                <img src="https://cibonaydames.github.io/hpv-static/img/0.png" alt="no partners">
+                               <br>
+                               <img src="https://cibonaydames.github.io/hpv-static/img/1.png" alt="one partners">
+                               <br>
+                               <img src="https://cibonaydames.github.io/hpv-static/img/2.png" alt="two partners">
+                               <br>
+                               <img src="https://cibonaydames.github.io/hpv-static/img/3.png" alt="three partners">
+                               <br>
+                               <img src="https://cibonaydames.github.io/hpv-static/img/6.png" alt="five partners">
                                <br>
                                 <br>
                                 <p>
@@ -88,8 +81,6 @@
                                    Health insurance plans cover the cost of HPV vaccines.<br> If you don't have insurance, the Vaccines for Children (VFC) program<br> may be able to help. To check where you can get HPV vaccinated, please go<br> to the following website and enter your zip code:<br> <a href="http://www.vaccines.gov/getting/where/index.html">http://www.vaccines.gov/getting/where/index.html</a></h3>
                                     </p>
                             <br>
-                            <center>
-                                <iframe frameborder="0" height="152" id="vaccinefinder" marginheight="0" marginwidth="0" name="vaccinefinder" scrolling="no" src="//wcdapps.hhs.gov/Badges/Handlers/Badge.ashx?js=0&widgetname=vaccinefinder" title="Vaccine.gov" width="269"></iframe></center><br><br>
                               </div>
 							</div>
 						</div>
@@ -105,280 +96,6 @@
 	<script src="js/dropdown.js"></script> 
 	<script src="js/main.js"></script>
 	<!-- //-end- concat_js -->
-	
-	<!-- D3 SCRIPTS -->
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-
-
-	<script>
-        // Size of SVG container
-            var fullwidth = 600;
-			var	fullheight = 600;
-        
-        // Margins around the graph
-            var margin = {top: 65, right: 90, bottom: 40, left: 66};
-            
-            var width = fullwidth - margin.left - margin.right;
-            var height = 265 - margin.top - margin.bottom;
-        
-            var widthScale = d3.scale.linear()
-				.range([0, width]);
-        
-        // Space out the bars between the top margin and chart height (bottom)
-			var heightScale = d3.scale.ordinal()
-				.rangeRoundBands([ 0, height], 0.5);   
-        
-            var xAxis = d3.svg.axis()
-							.scale(widthScale)
-							.orient("bottom")
-                            .innerTickSize([4])
-                            .outerTickSize([5]);
-            
-            var yAxis = d3.svg.axis()
-							.scale(heightScale)
-							.orient("left")
-							.innerTickSize([0]);
-        
-            var svg = d3.select("#hpvchart")
-				.append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-				.append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-        
-            var numOfPartner = 'zero';
-            var status = 0;
-        
-            d3.csv("data/hpv-data.csv", function(error, data) {
-
-				if (error) {
-					console.log("error reading file");
-				}
-
-				data.sort(function(a, b) {
-					return d3.descending(+a.status, +b.status);
-				});
-            
-				// you should calculate using d3.max for your data
-				widthScale.domain([ 0, d3.max(data, function(d) {
-					return +d.start;
-				}) ]);
-
-				heightScale.domain(data.map(function(d) { return +d.average; } ).slice(1));
-            
-            var rects = svg.selectAll("rect")
-                    .data(([data[0]]))
-                    .enter()
-                    .append("rect");
-            
-                rects
-					.attr("x", 0)
-					.attr("y", function(d) {
-						return heightScale(d.status); // because we mapped to the names!
-					})
-					.attr("width", function(d) {
-						return widthScale(+d.average);
-					})
-					.attr("height", heightScale.rangeBand()); // the height is a rangeband
-            
-                 svg.selectAll("#red-text")
-                   .attr("class", "label")
-				    .data(([data[0]]))
-			      	.enter()
-			      	.append("text")
-				    .text(function(d){
-                        return  +d.average + " %";
-					 })         
-                     .attr("x", function(d) {
-						return widthScale(+d.average)+5;
-					})
-                     .attr('y', '-45')
-                     .attr('id', 'red-text')
-                     .attr("fill","#8a8c8e")
-                     .attr("font-size","24")
-                     .attr("font-weight","700")
-                 
-                 svg.selectAll("#blue-text")
-                   .attr("class", "label")
-				    .data(([data[1]]))
-			      	.enter()
-			      	.append("text")
-				    .text(function(d){
-                        return  +d.average + " %";
-					 })         
-                     .attr("x", function(d) {
-						return widthScale(+d.average)-55;
-					})
-                     .attr('y', '-45')
-                     .attr('id', 'blue-text')
-                     .attr("fill","#8a8c8e")
-                     .attr("font-size","24")
-                     .attr("font-weight","700")
-                 
-                               /*gradient
-                               var gradient = svg.append("g")
-  .append("linearGradient")
-    .attr("id", "gradient")
-    .attr("x1", "0%")
-    .attr("y1", "0%")
-    .attr("x2", "100%")
-    .attr("y2", "100%")
-    .attr("spreadMethod", "pad");
-
-gradient.append("stop")
-    .attr("offset", "0%")
-    .attr("stop-color", "#0c0")
-    .attr("stop-opacity", 1);
-
-gradient.append("stop")
-    .attr("offset", "100%")
-    .attr("stop-color", "#c00")
-    .attr("stop-opacity", 1);*/
-                 
-                    // Style the axis
-                svg.append("g")
-                    .attr("class", "x axis")
-                    .attr("transform", "translate(0," + height + ")")
-                    .call(xAxis)
-                    ;
-            
-            // Label below x axis
-				svg.append("text")
-					.attr("class", "xlabel")
-        			.attr("transform", "translate(" + width/2 + " ," +
-        				height + ")")
-        			.style("text-anchor", "middle")
-        			.attr("dy", "0")
-        			.text("  ")
-                    .attr("fill","#5582b0")
-                    .attr("font-weight","600")
-                ;
-                
- 
-                svg.selectAll(".red-img")
-                    .data(([data[0]]))  
-                    .enter()
-                    .append("svg:image")
-                    .attr("x", function(d) {
-						return widthScale(+d.average)-45;
-					})
-                    .attr('y', '-40')
-                    .attr('class', 'red-img')
-                    .attr("height", 200)
-                    .attr("width", 115)
-                        .attr("xlink:href", "https://cibonaydames.github.io/hpv/img/silueta-red.svg");
-                
-                 svg.selectAll(".blue-img")
-                    .data(([data[1]]))  
-                    .enter()
-                    .append("svg:image")
-                    .attr("x", function(d) {
-						return widthScale(+d.average)-45;
-					})
-                    .attr('y', '-40')
-                    .attr('class', 'blue-img')
-                    .attr("height", 200)
-                    .attr("width", 115)
-                        .attr("xlink:href", "https://cibonaydames.github.io/hpv/img/silueta-blue.svg");
-                
-            
-            /*d3.selectAll("button")
-                    .on("click",function(){
-                        console.log(this.id);
-                    });*/
-            
-             d3.selectAll("button").on("click",function(){
-	               if(this.id == "unvaccinated")
-                      status = 0;
-	               else if(this.id == "vaccinated") {
-                      status = 1;
-	                   }
-	               else {
-		              numOfPartner = this.id;
-	                   }   
-                 
-                 rects
-	               .data(data)
-                   .transition() 
-                   .duration(1000)
-                   .ease("linear")
-	               .attr("width", function(d) {
-			         return widthScale(data[status][numOfPartner]); 
-           });
-                     
-               svg.selectAll("#red-text")
-               .data([data[0]])
-               .transition() 
-                   .duration(1000)
-                   .ease("linear")
-	               .attr("x", function(d) {
-			         return widthScale(d[numOfPartner])})
-                     .text(function(d){
-                       return d[numOfPartner] + " %"
-					 }); 
-                 
-                svg.selectAll("#blue-text")
-               .data([data[1]])
-               .transition() 
-                   .duration(1000)
-                   .ease("linear")
-	               .attr("x", function(d) {
-			         return widthScale(d[numOfPartner])-65;})
-                     .text(function(d){
-                       return d[numOfPartner] + " %"
-					 }); 
-               
-                svg.selectAll(".red-img")
-                    .data([data[0]])
-                    .transition() 
-                   .duration(1000)
-                   .ease("linear")
-	               .attr("x", function(d) {
-			    //get correct number     
-                return widthScale(d[numOfPartner])-45;  });
-                
-           
-                 svg.selectAll(".blue-img")
-                    .data([data[1]])
-                    .transition() 
-                   .duration(1000)
-                   .ease("linear")
-	               .attr("x", function(d) {
-			    //get correct number     
-                return widthScale(d[numOfPartner])-45;  });
-                 
-                 function wrap(text, width) {
-  text.each(function() {
-    var text = d3.select(this),
-        words = text.text().split(/\s+/).reverse(),
-        word,
-        line = [],
-        lineNumber = 0,
-        lineHeight = 1.1, // ems
-        y = text.attr("y"),
-        dy = parseFloat(text.attr("dy")),
-        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-    while (word = words.pop()) {
-      line.push(word);
-      tspan.text(line.join(" "));
-      if (tspan.node().getComputedTextLength() > width) {
-        line.pop();
-        tspan.text(line.join(" "));
-        line = [word];
-        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-      }
-    }
-      });
-}
-		         
-	       });
-
-           });  
-         
-
-    </script>
 
 </body>
 </html>
