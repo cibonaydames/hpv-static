@@ -228,7 +228,8 @@ h4,
 
 h4,
 .h4 {
-	font-size: 14px;
+	font-size: 16px;
+    font-weight: 400;
 }
 
 @media ( min-width: 768px ) {
@@ -239,8 +240,8 @@ h4,
 	
 	h4,
 	.h4	{
-		font-size: 22px;
-	font-weight: 300;
+		font-size: 16px;
+	font-weight: 400;
 	line-height: 1.09;
 	letter-spacing: inherit;
 	}
