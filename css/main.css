@@ -220,17 +220,17 @@ h3,
 .h3,
 h4,
 .h4 {
-	font-size: 16px;
-	font-weight: 300;
+	font-size: 18px;
+	font-weight: 500;
 	line-height: 1.09;
 	letter-spacing: inherit;
 }
 
-h4,
+,
 .h4 {
-	font-size: 16px;
+	font-size: 18px;
     PADDING-BOTTOM: 10px;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 @media ( min-width: 768px ) {
@@ -241,8 +241,8 @@ h4,
 	
 	h4,
 	.h4	{
-		font-size: 16px;
-	font-weight: 400;
+		font-size: 18px;
+	font-weight: 500;
 	line-height: 1.09;
         PADDING-BOTTOM: 10px;
 	letter-spacing: inherit;
