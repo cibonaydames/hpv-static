@@ -103,18 +103,26 @@ html {
 }
 
 @media ( min-width: 768px ) {
-
+    
+    body {
+		font-size: 15px;
+         
+	}
+    
 	html {
-		font-size: 18px;
+		font-size: 15px;
 	}
 
 }
 
 @media ( min-width: 1200px ) {
 
-
+    body {
+		font-size: 16px;
+	}
+    
 	html {
-		font-size: 20px;
+		font-size: 16px;
 	}
     
      h1,
@@ -123,13 +131,25 @@ html {
 	text-transform: uppercase;
     font-size: 48px;
 }
+    
+    img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	margin: auto;
+}
 
 }
 
 
 @media ( min-width: 1350px ) {
+    
 	html {
-		font-size: 22px;
+		font-size: 14px;
+	}
+    
+    body {
+		font-size: 16px;
 	}
     
     h1,
@@ -137,8 +157,16 @@ html {
 	font-weight: 700;
 	text-transform: uppercase;
     font-size: 48px;
+    
 }
 
+    img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	margin: auto;
+}
+    
 }
 
 body,
@@ -146,7 +174,7 @@ input,
 select,
 button {
 	font-family: 'Open Sans', sans-serif;
-	font-size: 16px;
+	
 	line-height: 1.36;
 	color: #8a8c8e;
 	letter-spacing: -0.035em;
@@ -168,7 +196,6 @@ h1,
 .h1 {
 	font-weight: 700;
 	text-transform: uppercase;
-    font-size: 48px;
 }
 
 h2,
@@ -224,6 +251,7 @@ h4,
 	font-weight: 500;
 	line-height: 1.09;
 	letter-spacing: inherit;
+    background-color: #fff;
 }
 
 ,
@@ -232,6 +260,7 @@ h4,
     PADDING-BOTTOM: 10px;
     font-weight: 500;
 }
+
 
 @media ( min-width: 768px ) {
 	h3,
@@ -254,6 +283,13 @@ h4,
         font-size:18px;
         font-weight:500;
     }
+    
+    img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	margin: auto;
+}
 }
 
 p {
@@ -277,15 +313,19 @@ nav ul {
 		padding-left: 0;
 		list-style-position: inside;
 	}
-
-}
-
-img {
+    
+    img {
 	display: block;
 	max-width: 100%;
 	height: auto;
 	margin: auto;
 }
+    
+    body,html {background-image: none;}
+
+}
+
+
 
 iframe {
 	border: 0;
@@ -1013,7 +1053,7 @@ input.text:focus {
     background-position: left bottom; /*Positioning*/
     background-repeat: no-repeat;
 	background-color: rgba(255,255,255, 0.8);
-    background-size: 300px 300px;
+    background-size: 200px 200px;
 }
 
 .hero-home h1 {
